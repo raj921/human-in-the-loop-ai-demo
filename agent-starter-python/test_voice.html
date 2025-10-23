@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voice Agent Test</title>
+    <script src="https://unpkg.com/@livekit/components-js@0.7.3"></script>
+</head>
+<body>
+    <h1>Glow Beauty Salon - Voice Agent Test</h1>
+    <div id="status">Connecting...</div>
+    <button id="connect" onclick="connectAgent()">Connect to Agent</button>
+    <button id="disconnect" onclick="disconnect()" style="display:none">Disconnect</button>
+    
+    <script>
+        const LIVEKIT_URL = 'wss://warm-transfer-demo-lisbwtug.livekit.cloud';
+        const LIVEKIT_API_KEY = 'APIrNeYY3MzFd6D';
+        const LIVEKIT_API_SECRET = '9KfRzEqLe3VkAGfbnEWfHneYJHoHGDs50AVO1HeJUd4M';
+        
+        let room = null;
+        
+        async function connectAgent() {
+            document.getElementById('status').innerText = 'Generating token...';
+            
+            // Generate token (in production, do this server-side)
+            const token = await generateToken();
+            
+            document.getElementById('status').innerText = 'Connecting to room...';
+            
+            room = new LiveKit.Room();
+            
+            room.on('participantConnected', (participant) => {
+                console.log('Participant connected:', participant.identity);
+                document.getElementById('status').innerText = 'Agent connected! Start speaking...';
+            });
+            
+            room.on('trackSubscribed', (track, publication, participant) => {
+                if (track.kind === 'audio') {
+                    const audioElement = track.attach();
+                    document.body.appendChild(audioElement);
+                }
+            });
+            
+            try {
+                await room.connect(LIVEKIT_URL, token);
+                
+                // Enable microphone
+                await room.localParticipant.setMicrophoneEnabled(true);
+                
+                document.getElementById('connect').style.display = 'none';
+                document.getElementById('disconnect').style.display = 'block';
+                document.getElementById('status').innerText = 'Connected! Agent will join soon. Start speaking!';
+            } catch (error) {
+                console.error('Failed to connect:', error);
+                document.getElementById('status').innerText = 'Error: ' + error.message;
+            }
+        }
+        
+        function disconnect() {
+            if (room) {
+                room.disconnect();
+                document.getElementById('connect').style.display = 'block';
+                document.getElementById('disconnect').style.display = 'none';
+                document.getElementById('status').innerText = 'Disconnected';
+            }
+        }
+        
+        async function generateToken() {
+            // Note: In production, generate tokens server-side
+            // This is simplified for demo
+            const roomName = 'test-room-' + Date.now();
+            
+            // For now, we'll use LiveKit CLI or server-side token generation
+            // This is a placeholder
+            alert('Please use LiveKit CLI method instead - this requires server-side token generation');
+            throw new Error('Use CLI method');
+        }
+    </script>
+</body>
+</html>
