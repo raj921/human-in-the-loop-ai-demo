@@ -1,4 +1,4 @@
-# Glow Beauty Salon - Human-in-the-Loop AI Receptionist
+ Human-in-the-Loop AI Receptionist
 
 A comprehensive voice AI receptionist system that intelligently escalates to human supervisors when needed and learns from interactions over time.
 
@@ -175,114 +175,10 @@ Try questions like:
 - **SQLite**: Lightweight database suitable for demo scale
 - **Jinja2**: Template engine for simple HTML interface
 
-### Design Philosophy
 
-#### Modularity
-- Each component is independent and can be tested separately
-- Clear separation between AI, database, and web layers
-- Async/await throughout for better performance
-
-#### Reliability
-- Comprehensive error handling in all functions
-- Graceful degradation when services fail
-- Timeout monitoring prevents stuck requests
-- Automatic service recovery
-
-#### Scalability Considerations
-- Database schema designed for easy scaling
-- Async operations ready for higher loads
-- Modular services can be containerized separately
-- FastAPI dashboard can handle concurrent supervisors
-
-#### Extensibility
-- Easy to add new business contexts
-- Pluggable notification systems (SMS, webhooks, push)
-- Knowledge base can integrate with external documentation
-- Dashboard can be enhanced with analytics
-
-## 🎬 Demo Workflow
-
-### Scenario 1: Basic Inquiry
-1. Customer asks: "What are your hours?"
-2. AI responds immediately with salon hours
-3. No supervisor intervention needed
-
-### Scenario 2: Escalation
-1. Customer asks: "Do you offer keratin treatments?"
-2. AI doesn't know, calls `request_help` function
-3. Help request created and appears in supervisor dashboard
-4. Supervisor receives console notification
-5. Supervisor responds: "Yes, we offer keratin treatments starting at $150"
-6. Customer automatically receives follow-up with the answer
-7. Question/answer added to knowledge base
-
-### Scenario 3: Learning
-1. Future customer asks about keratin treatments
-2. AI checks learned answers and provides response without escalation
-3. Demonstrates system learning from previous interactions
-
-## 🚀 Production Deployment
-
-### Scaling Considerations
-- **Database**: Migrate from SQLite to PostgreSQL for higher loads
-- **Notifications**: Integrate with Twilio SMS or webhook services
-- **Authentication**: Add supervisor login system
-- **Monitoring**: Add metrics and alerting
-- **CDN**: Serve static assets via CDN
-- **Load Balancing**: Multiple agent instances behind load balancer
-
-### Security Enhancements
-- API key rotation and secure storage
-- HTTPS enforcement
-- Rate limiting on dashboard
-- Input validation and sanitization
-- Audit logging for supervisor actions
-
-## 📊 Performance Notes
-
-- **AI Response Time**: < 1 second for known answers
-- **Escalation Latency**: Immediate notification to supervisor
-- **Customer Follow-up**: < 5 seconds after supervisor response
-- **Dashboard Refresh**: Real-time updates on page load
-- **Memory Usage**: < 500MB for full system
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **API Key Errors**
-   - Verify all API keys in `.env.local`
-   - Check key permissions and usage limits
-
-2. **LiveKit Connection Issues**
-   - Ensure LIVEKIT_URL is correct
-   - Check API key permissions
-
-3. **Database Errors**
-   - Ensure write permissions in project directory
-   - Check SQLite file isn't locked
-
-4. **Web Server Not Starting**
-   - Check if port 8000 is available
-   - Verify all dependencies installed: `uv sync`
-
-### Logs and Monitoring
-- Check console output for real-time notifications
-- Use the dashboard to monitor request status
-- Review request history for debugging
 
 ## 📄 License
 
 MIT License - see LICENSE file for details.
 
-## 🤝 Contributing
 
-Feel free to extend this system with:
-- Additional business contexts
-- Enhanced notification systems
-- Analytics and reporting features
-- Advanced AI capabilities
-
----
-
-**Built with ❤️ for Frontdesk Engineering Assessment**
