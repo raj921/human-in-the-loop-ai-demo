@@ -1,4 +1,4 @@
- Human-in-the-Loop AI Receptionist
+# Human-in-the-Loop AI Receptionist
 
 A comprehensive voice AI receptionist system that intelligently escalates to human supervisors when needed and learns from interactions over time.
 
